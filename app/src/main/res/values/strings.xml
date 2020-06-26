@@ -1,3 +1,15 @@
+
 <resources>
     <string name="app_name">test</string>
+    <string name="greeting">Welcome to CKG Entertainment</string>
+    <string name="bnext">NEXT</string>
+    <string name="Start">Start</string>
+    <string name="Setting">Setting</string>
+    <string name="Leaderboard">Leaderboard</string>
+    <string name="music">Music</string>
+    <string name="sound">Sound</string>
+    <string name="back">Back</string>
+    <string name="Game_Text">Nothing Yet!!!</string>
+
+    <string name="DevBy">Developed by CKG Entertainment</string>
 </resources>

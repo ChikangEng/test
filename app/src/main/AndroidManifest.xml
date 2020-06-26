@@ -19,6 +19,7 @@
         <activity android:name=".HomeActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".GameActivity"/>
+        <activity android:name=".LeaderboardActivity"/>
     </application>
 
 </manifest>

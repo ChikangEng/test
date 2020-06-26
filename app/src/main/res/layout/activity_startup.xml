@@ -3,7 +3,7 @@
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="#f7e0a3"
+android:background="@color/LightBackground"
 
 android:gravity="center">
 
@@ -15,10 +15,15 @@ android:gravity="center">
 <TextView
     android:layout_marginTop="10dp"
     android:layout_width="wrap_content"
-    android:text="Welcome to CKG Entertainment"
-    android:textColor="#6e5109"
-    android:textSize="20dp"
+    android:text="@string/greeting"
+    android:textColor="@color/DarkText"
+    android:textSize="20sp"
     android:layout_height="wrap_content" />
- 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="NextButtonClick"
+        android:text="@string/bnext" />
 
 </LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">សាកល្បង</string>
+    <string name="greeting">សូមស្វាគមន៍មកកាន់ CKG កំសាន្</string>
+    <string name="bnext">បន្ទាប់</string>
+    <string name="Start">ចាប់ផ្តើម</string>
+    <string name="Setting">ការកំណត់</string>
+    <string name="Leaderboard">តារាងពិន្ទុ</string>
+    <string name="music">ភ្លេង</string>
+    <string name="sound">សំឡេង</string>
+    <string name="back">ថយក្រោយ</string>
+    <string name="Game_Text">គ្មានអ្វីទេ!!!</string>
+
+    <string name="DevBy">បង្កើតដោយ CKG Entertainment</string>
+</resources>

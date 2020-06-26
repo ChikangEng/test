@@ -12,12 +12,12 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.setting_activity);
+        setContentView(R.layout.activity_setting);
     }
 
     public void onButtonClick(View view) {
-        Intent game = new Intent(this, GameActivity.class);
+        Intent home = new Intent(this, HomeActivity.class);
 
-        startActivity(game);
+        startActivity(home);
     }
 }
