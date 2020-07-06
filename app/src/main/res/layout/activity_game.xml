@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         >
         <TextView
             android:id="@+id/text_view_score"
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_view_score"
-            android:text="Life: 0"
+            android:text="Life: 3"
             android:textSize="30sp" />
         <Button
             android:id="@+id/button_back"
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:onClick="onButtonClick"
-            android:text="@string/back" />
+            android:text="@string/stop" />
         <Button
             android:id="@+id/button_reset"
             android:layout_width="wrap_content"
@@ -37,6 +38,18 @@
             android:layout_below="@+id/button_back"
             android:text="reset" />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/text_view_spawnTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spawn Time: 0"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/text_view_appearDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Appear Duration: 0"
+        android:textSize="20sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
