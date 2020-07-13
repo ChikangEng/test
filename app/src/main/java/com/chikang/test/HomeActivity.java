@@ -30,4 +30,9 @@ public class HomeActivity extends AppCompatActivity {
 
         startActivity(lead);
     }
+    public void HistoryButtonClick(View view) {
+        Intent hist = new Intent(this, HistoryActivity.class);
+
+        startActivity(hist);
+    }
 }

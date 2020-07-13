@@ -193,7 +193,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         buttons[3][1].setText("");
         buttons[3][2].setText("");
         buttons[3][3].setText("");
-        ((Button)findViewById(R.id.button_reset)).setVisibility(View.VISIBLE);
+        findViewById(R.id.button_reset).setVisibility(View.VISIBLE);
         ((TextView)findViewById(R.id.button_back)).setText("Back");
         ReturnHome = true;
     }

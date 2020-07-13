@@ -12,5 +12,7 @@
     <string name="stop">ឈប់</string>
     <string name="Game_Text">គ្មានអ្វីទេ!!!</string>
 
+    <string name="History">ប្រវត្តិ</string>
+
     <string name="DevBy">បង្កើតដោយ CKG Entertainment</string>
 </resources>

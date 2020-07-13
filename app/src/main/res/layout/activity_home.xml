@@ -43,6 +43,12 @@
             android:layout_height="wrap_content"
             android:onClick="LeaderboardButtonClick"
             android:text="@string/Leaderboard" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="HistoryButtonClick"
+            android:text="@string/History" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
