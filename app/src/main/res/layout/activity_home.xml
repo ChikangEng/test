@@ -25,30 +25,62 @@
         android:layout_weight="2"
         android:background="@color/DarkBackground"
         >
-
-        <Button
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="StartButtonClick"
-            android:text="@string/Start" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="StartButtonClick"
+                android:text="@string/Start" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="SettingButtonClick"
-            android:text="@string/Setting" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="SettingButtonClick"
+                android:text="@string/Setting" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="LeaderboardButtonClick"
-            android:text="@string/Leaderboard" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="LeaderboardButtonClick"
+                android:text="@string/Leaderboard" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="HistoryButtonClick"
-            android:text="@string/History" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="HistoryButtonClick"
+                android:text="@string/History" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/loginBtnHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="LoginButtonClick"
+                android:text="Login" />
+            <TextView
+                android:id="@+id/usernameHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/logoutTxtHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="logout?"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

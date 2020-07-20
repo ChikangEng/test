@@ -24,6 +24,8 @@
         <activity android:name=".GameActivity"/>
         <activity android:name=".LeaderboardActivity"/>
         <activity android:name=".HistoryActivity"/>
+        <activity android:name=".Register"/>
+        <activity android:name=".Login"/>
     </application>
 
 </manifest>

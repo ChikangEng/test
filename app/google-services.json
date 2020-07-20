@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1090135090532",
+    "firebase_url": "https://game-36c11.firebaseio.com",
+    "project_id": "game-36c11",
+    "storage_bucket": "game-36c11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090135090532:android:9a9a80470d64e5dad14671",
+        "android_client_info": {
+          "package_name": "com.chikang.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090135090532-k3rtbbiq8rtv97bhh6gff8brdb32u50m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chikang.test",
+            "certificate_hash": "07c78a7fe490e672ea72a302e6a7a5bba005ae8c"
+          }
+        },
+        {
+          "client_id": "1090135090532-cvmb89c46ppn6rqfscb7k7piq24h7eej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBHN4hZ7SufFYiNJy4dtO0uAr1PbtF8vI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090135090532-cvmb89c46ppn6rqfscb7k7piq24h7eej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

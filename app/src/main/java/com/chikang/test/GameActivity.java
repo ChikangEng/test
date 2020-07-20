@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +17,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.gson.Gson;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,6 +41,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private int Score;
     private int Life = 3;
+    int top_score = -1;
 
     private int SpawnTime = 2000; //in milliseconds
     private int AppearDuration = 4000; //in milliseconds
@@ -37,6 +50,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtViewLife;
     private TextView txtViewSpawnTime;
     private TextView txtViewAppearDuration;
+
+    public static final String TAG = "TAG";
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userID;
 
     private String goblin = "\uD83D\uDC7A"; //👺
     private String angel = "\uD83D\uDC7C";  //👼
@@ -59,14 +77,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 buttons[i][j].setOnClickListener(this);
             }
         }
-        handler.postDelayed(runnable, 1000);
+        if (!ReturnHome) {
+            handler.postDelayed(runnable, 1000);
+        }
 
         Button btn_Reset = findViewById(R.id.button_reset);
         btn_Reset.setVisibility(View.GONE);
         btn_Reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Score = 0;
+                Life = 3;
+                ReturnHome = false;
+                SpawnTime = 2030;
+                AppearDuration = 4100;
+                findViewById(R.id.button_reset).setVisibility(View.GONE);
+                ((TextView)findViewById(R.id.button_back)).setText("Stop");
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        buttons[i][j].setText("");
+                    }
+                }
+                UpdateStat();
             }
         });
 
@@ -100,7 +132,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void UpdateStat(){
         txtViewScore.setText("Score: " + Score);
-        if (Score % 10 == 0) {
+        if (Score % 5 == 0) {
             if (SpawnTime > 500) {
                 SpawnTime -= 30;
                 txtViewSpawnTime.setText("Spawn Time: " + SpawnTime);
@@ -125,12 +157,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (int k = 0; k < gobNum; k++) {
             i = rand.nextInt(4);
             j = rand.nextInt(4);
-            if (buttons[i][j].getText().toString().equals(goblin)) {
-                Score--;
-                Life--;
+            if (buttons[i][j].getText().toString().equals("")) {
+                buttons[i][j].setText(goblin);
+                time[i][j] = System.currentTimeMillis();
             }
-            buttons[i][j].setText(goblin);
-            time[i][j] = System.currentTimeMillis();
         }
         if (angNum > 7) {
             i = rand.nextInt(4);
@@ -146,23 +176,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-        Random();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (!(buttons[i][j].getText().toString().equals(""))) {
-                    if ((time[i][j] + AppearDuration) < System.currentTimeMillis()) {
-                        if (buttons[i][j].getText().toString().equals(goblin)) {
-                            Score --;
-                            Life--;
-                        } else {
-                            Score+=10;
+            if (!ReturnHome) {
+                Random();
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        if (!(buttons[i][j].getText().toString().equals(""))) {
+                            if ((time[i][j] + AppearDuration) < System.currentTimeMillis()) {
+                                if (buttons[i][j].getText().toString().equals(goblin)) {
+                                    Score--;
+                                    Life--;
+                                } else {
+                                    Score += 10;
+                                }
+                                buttons[i][j].setText("");
+                                UpdateStat();
+                            }
                         }
-                        buttons[i][j].setText("");
-                        UpdateStat();
                     }
                 }
             }
-        }
         handler.postDelayed(this, SpawnTime);
         }
     };
@@ -176,7 +208,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void EndGame() {
-        handler.removeCallbacksAndMessages(null);
         buttons[0][0].setText("G");
         buttons[0][1].setText("A");
         buttons[0][2].setText("M");
@@ -196,33 +227,47 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button_reset).setVisibility(View.VISIBLE);
         ((TextView)findViewById(R.id.button_back)).setText("Back");
         ReturnHome = true;
-    }
 
-    private void loadLead(){
 
-        //load data from url
-        String url = "http://10.0.2.2/game/leaderboard.php";
-
-        //Create a request
-        StringRequest request = new StringRequest(url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Convert JSON string to array using GSON
-                        Gson gson = new Gson();
-                        Leaderboard[] lead = gson.fromJson(response, Leaderboard[].class);
-                        Toast.makeText(GameActivity.this, ""+goblin, Toast.LENGTH_LONG).show();
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        if (fAuth.getCurrentUser() == null) {
+            Toast.makeText(getApplicationContext(),"Please log in to register score ",Toast.LENGTH_LONG).show();
+        } else {
+            //Check if score is higher
+            userID = fAuth.getCurrentUser().getUid();
+            DocumentReference documentReference = fStore.collection("scores").document(userID);
+            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                    if (documentSnapshot.exists()) {
+                        top_score = (documentSnapshot.getLong("score")).intValue();
+                    } else {
+                        top_score = 0;
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(GameActivity.this, "Something Error While Loading Data From Server", Toast.LENGTH_LONG).show();
-                Log.d("gametest", "Load data error : " + error.getMessage());
+                }
+            });
+
+            if (top_score < Score) {
+                Map<String,Object> score = new HashMap<>();
+                score.put("date", Calendar.getInstance().getTime());
+                score.put("score",Score);
+                documentReference.set(score).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: Score is updated for "+ userID);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e.toString());
+                    }
+                });
+                Toast.makeText(getApplicationContext(),"New highscore : " + Score,Toast.LENGTH_LONG).show();
             }
-        });
-
-        //Add request to Queue
-        Volley.newRequestQueue(this).add(request);
-
+            else {
+                Toast.makeText(getApplicationContext(),"Previous highscore : " + top_score,Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
